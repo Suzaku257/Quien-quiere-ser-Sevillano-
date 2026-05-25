@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - ¿Quién Quiere Ser Sevillano?{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1 class="main-title">🎯 ¿Quién Quiere Ser Sevillano?</h1>
+        <p class="subtitle">El Quiz Educativo Interactivo sobre Sevilla</p>
+        
+        <div class="hero-description">
+            <p>Demuestra cuánto sabes sobre la cultura, historia, monumentos y tradiciones de Sevilla.</p>
+            <p>Responde preguntas sobre la bella ciudad de Andalucía y consigue la máxima puntuación.</p>
+        </div>
+
+        <div class="cta-buttons">
+            {% if 'user_id' in session %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-large">
+                📊 Ir a mi Dashboard
+            </a>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-large">
+                🔑 Iniciar Sesión
+            </a>
+            {% endif %}
+            <a href="{{ url_for('registro') }}" class="btn btn-secondary btn-large">
+                📝 Registrarse
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-features">
+        <div class="feature">
+            <div class="feature-icon">📚</div>
+            <h3>10 Preguntas</h3>
+            <p>Un quiz rápido sobre historia, cultura, monumentos y geografía de Sevilla</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🏆</div>
+            <h3>Sistema de Puntuación</h3>
+            <p>Obtén puntos por cada respuesta correcta y compite por el mejor score</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📊</div>
+            <h3>Historial de Intentos</h3>
+            <p>Consulta tu progreso y mejora tu puntuación en cada intento</p>
+        </div>
+    </div>
+</div>
+
+<div class="leaderboard-section">
+    <h2>🏆 Puntuaciones de la gente registrada</h2>
+    {% if leaderboard %}
+    <div class="leaderboard-table-wrapper">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Nombre</th>
+                    <th>Intentos</th>
+                    <th>Mejor puntuación</th>
+                    <th>Puntuación media</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in leaderboard[:10] %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.nombre }}</td>
+                    <td>{{ row.intentos }}</td>
+                    <td>{{ "%.0f"|format(row.puntuacion_maxima) if row.puntuacion_maxima else 0 }}%</td>
+                    <td>{{ "%.1f"|format(row.puntuacion_promedio) if row.puntuacion_promedio else 0 }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-leaderboard">
+        <p>Aún no hay puntuaciones registradas.</p>
+    </div>
+    {% endif %}
+</div>
+
+<div class="recent-scores-section">
+    <h2>🕒 Últimos resultados</h2>
+    {% if recent_scores %}
+    <div class="recent-scores-list">
+        {% for score in recent_scores %}
+        <div class="recent-score-card">
+            <div>
+                <strong>{{ score.usuario_nombre }}</strong>
+                <div class="recent-score-meta">{{ score.fecha_intento.strftime('%d/%m/%Y %H:%M') if score.fecha_intento else '' }}</div>
+            </div>
+            <div class="recent-score-value">{{ score.puntuacion_total }}%</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="info-section">
+    <h2>¿Cómo Funciona?</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Regístrate</h3>
+            <p>Crea tu cuenta con tu nombre, email y contraseña segura</p>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Inicia el Quiz</h3>
+            <p>Responde todas las preguntas sobre Sevilla</p>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Obtén tu Puntuación</h3>
+            <p>Visualiza tu resultado y compara con tus intentos anteriores</p>
+        </div>
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>Mejora tu Record</h3>
+            <p>Intenta nuevamente para conseguir una puntuación más alta</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

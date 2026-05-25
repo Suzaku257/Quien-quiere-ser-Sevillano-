@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar Quiz - ¿Quién Quiere Ser Sevillano?{% endblock %}
+
+{% block content %}
+<div class="start-quiz-container">
+    <div class="start-quiz-box">
+        <h1>🎯 ¿Listo para el Quiz?</h1>
+
+        <div class="quiz-info">
+            <div class="info-card">
+                <div class="info-icon">📝</div>
+                <div class="info-text">
+                    <h3>10 Preguntas</h3>
+                    <p>Sobre la historia, cultura y monumentos de Sevilla</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">⏱️</div>
+                <div class="info-text">
+                    <h3>Sin Límite de Tiempo</h3>
+                    <p>Responde a tu propio ritmo</p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🏆</div>
+                <div class="info-text">
+                    <h3>Puntuación Inmediata</h3>
+                    <p>Conoce tu resultado al finalizar</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-rules">
+            <h2>✓ Normas del Quiz</h2>
+            <ul>
+                <li>Responde todas las preguntas obligatoriamente</li>
+                <li>Recibirás 1 punto por cada respuesta correcta</li>
+                <li>Tu puntuación se calcula como porcentaje</li>
+                <li>Al terminar, podrás ver tus respuestas vs. las correctas</li>
+                <li>Puedes realizar el quiz múltiples veces</li>
+            </ul>
+        </div>
+
+        <div class="quiz-actions">
+            <form method="POST" action="{{ url_for('start_quiz') }}" style="width: 100%;">
+                <button type="submit" class="btn btn-primary btn-large btn-block">
+                    🚀 Comenzar Quiz
+                </button>
+            </form>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-block">
+                ← Volver al Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .start-quiz-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px);
+        padding: 20px;
+    }
+
+    .start-quiz-box {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .start-quiz-box h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .quiz-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .info-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        border-top: 4px solid #d4af37;
+    }
+
+    .info-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .info-text h3 {
+        color: #333;
+        margin: 10px 0 5px 0;
+    }
+
+    .info-text p {
+        color: #666;
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .quiz-rules {
+        background: #fafafa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+        border-left: 4px solid #4caf50;
+    }
+
+    .quiz-rules h2 {
+        color: #333;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .quiz-rules ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #555;
+    }
+
+    .quiz-rules li {
+        margin: 8px 0;
+        line-height: 1.6;
+    }
+
+    .quiz-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-block {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .start-quiz-box {
+            padding: 25px;
+        }
+
+        .start-quiz-box h1 {
+            font-size: 24px;
+        }
+
+        .quiz-info {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}

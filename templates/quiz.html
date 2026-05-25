@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz - ¿Quién Quiere Ser Sevillano?{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% else %}
+    
+    <div class="quiz-header">
+        <div class="progress-info">
+            <h1>Pregunta {{ numero_pregunta }} de {{ total_preguntas }}</h1>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ (numero_pregunta / total_preguntas) * 100 }}%"></div>
+                </div>
+                <span class="progress-text">{{ "%.0f"|format((numero_pregunta / total_preguntas) * 100) }}%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="quiz-content">
+        <div class="question-box">
+            <h2 class="question-text">{{ pregunta.pregunta }}</h2>
+
+            <form method="POST" action="{{ url_for('responder') }}" class="answer-form">
+                <div class="options">
+                    <label class="option-label">
+                        <input 
+                            type="radio" 
+                            name="respuesta" 
+                            value="A" 
+                            required
+                            id="option_a"
+                        >
+                        <span class="option-letter">A</span>
+                        <span class="option-text">{{ pregunta.opcion_a }}</span>
+                    </label>
+
+                    <label class="option-label">
+                        <input 
+                            type="radio" 
+                            name="respuesta" 
+                            value="B"
+                            id="option_b"
+                        >
+                        <span class="option-letter">B</span>
+                        <span class="option-text">{{ pregunta.opcion_b }}</span>
+                    </label>
+
+                    <label class="option-label">
+                        <input 
+                            type="radio" 
+                            name="respuesta" 
+                            value="C"
+                            id="option_c"
+                        >
+                        <span class="option-letter">C</span>
+                        <span class="option-text">{{ pregunta.opcion_c }}</span>
+                    </label>
+
+                    <label class="option-label">
+                        <input 
+                            type="radio" 
+                            name="respuesta" 
+                            value="D"
+                            id="option_d"
+                        >
+                        <span class="option-letter">D</span>
+                        <span class="option-text">{{ pregunta.opcion_d }}</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large btn-block">
+                    {% if numero_pregunta == total_preguntas %}
+                        ✓ Finalizar Quiz
+                    {% else %}
+                        → Siguiente Pregunta
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+
+        <div class="quiz-sidebar">
+            <div class="category-badge">
+                <span>📚</span>
+                <strong>{{ pregunta.categoria | capitalize }}</strong>
+            </div>
+            
+            <div class="category-info">
+                <h3>Categorías</h3>
+                <ul>
+                    <li>🏛️ Monumentos</li>
+                    <li>📜 Historia</li>
+                    <li>🗺️ Geografía</li>
+                    <li>🎭 Cultura</li>
+                    <li>🎉 Tradiciones</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .quiz-container {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .quiz-header {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-header h1 {
+        margin: 0 0 15px 0;
+        color: #333;
+        font-size: 24px;
+    }
+
+    .progress-bar-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .progress-bar {
+        flex: 1;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #d4af37, #ffd700);
+        transition: width 0.3s ease;
+    }
+
+    .progress-text {
+        min-width: 40px;
+        text-align: right;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .quiz-content {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 20px;
+    }
+
+    .question-box {
+        background: white;
+        border-radius: 8px;
+        padding: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-text {
+        color: #333;
+        margin: 0 0 20px 0;
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    .answer-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+
+    .option-label {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #fafafa;
+    }
+
+    .option-label:hover {
+        border-color: #d4af37;
+        background: #fff9f0;
+    }
+
+    .option-label input[type="radio"] {
+        margin: 3px 12px 0 0;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        accent-color: #d4af37;
+    }
+
+    .option-label input[type="radio"]:checked + .option-letter {
+        color: #d4af37;
+    }
+
+    .option-letter {
+        font-weight: 700;
+        color: #666;
+        min-width: 30px;
+        font-size: 16px;
+    }
+
+    .option-text {
+        flex: 1;
+        color: #333;
+        font-size: 15px;
+    }
+
+    .option-label input[type="radio"]:checked ~ .option-text {
+        font-weight: 600;
+        color: #d4af37;
+    }
+
+    .quiz-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .category-badge {
+        background: linear-gradient(135deg, #d4af37, #ffd700);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    .category-badge span {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .category-info {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-info h3 {
+        margin: 0 0 12px 0;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .category-info ul {
+        margin: 0;
+        padding-left: 20px;
+        list-style: none;
+    }
+
+    .category-info li {
+        margin: 8px 0;
+        color: #666;
+        font-size: 13px;
+    }
+
+    .btn-block {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .quiz-content {
+            grid-template-columns: 1fr;
+        }
+
+        .question-box {
+            padding: 20px;
+        }
+
+        .question-text {
+            font-size: 18px;
+        }
+
+        .option-label {
+            padding: 12px;
+        }
+    }
+</style>
+{% endblock %}

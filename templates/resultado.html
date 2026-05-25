@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado - ¿Quién Quiere Ser Sevillano?{% endblock %}
+
+{% block content %}
+<div class="resultado-container">
+    <div class="resultado-header">
+        <h1>🎯 ¡Quiz Completado!</h1>
+        
+        <div class="puntuacion-grande">
+            <div class="puntuacion-circulo">
+                <div class="numero-puntuacion">{{ puntuacion_total }}</div>
+                <div class="simbolo-porcentaje">%</div>
+            </div>
+        </div>
+
+        <div class="resultado-resumen">
+            <p><strong>Respuestas Correctas:</strong> <span class="verde">{{ respuestas_correctas }}/{{ total_preguntas }}</span></p>
+            <p><strong>Puntuación Total:</strong> <span class="dorado">{{ puntuacion_total }}%</span></p>
+        </div>
+
+        {% if puntuacion_total >= 80 %}
+        <div class="mensaje-excelente">
+            🏆 ¡Excelente! Eres un verdadero Sevillano
+        </div>
+        {% elif puntuacion_total >= 60 %}
+        <div class="mensaje-bien">
+            ✓ ¡Bien hecho! Sabes mucho sobre Sevilla
+        </div>
+        {% elif puntuacion_total >= 40 %}
+        <div class="mensaje-regular">
+            📚 Buen inicio, aprende más sobre Sevilla
+        </div>
+        {% else %}
+        <div class="mensaje-intenta">
+            💪 Sigue intentando, descubre la magia de Sevilla
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="detalles-respuestas">
+        <h2>📋 Detalle de Respuestas</h2>
+        
+        <div class="respuestas-list">
+            {% for detalle in detalles %}
+            <div class="respuesta-item {% if detalle.correcta %}correcta{% else %}incorrecta{% endif %}">
+                <div class="respuesta-icon">
+                    {% if detalle.correcta %}
+                    ✓
+                    {% else %}
+                    ✗
+                    {% endif %}
+                </div>
+                
+                <div class="respuesta-contenido">
+                    <h3>{{ loop.index }}. {{ detalle.pregunta }}</h3>
+                    
+                    <div class="respuesta-comparacion">
+                        <div class="tu-respuesta">
+                            <span class="label">Tu respuesta:</span>
+                            <span class="valor {% if detalle.correcta %}correcta{% else %}incorrecta{% endif %}">
+                                {{ detalle.respuesta_usuario }}
+                            </span>
+                        </div>
+                        
+                        {% if not detalle.correcta %}
+                        <div class="respuesta-correcta">
+                            <span class="label">Respuesta correcta:</span>
+                            <span class="valor correcta">{{ detalle.respuesta_correcta }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="resultado-acciones">
+        <form action="{{ url_for('start_quiz') }}" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-primary btn-large">
+                🔄 Intentar de Nuevo
+            </button>
+        </form>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary btn-large">
+            📊 Ver Dashboard
+        </a>
+    </div>
+</div>
+
+<style>
+    .resultado-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .resultado-header {
+        background: white;
+        border-radius: 10px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .resultado-header h1 {
+        color: #333;
+        margin: 0 0 30px 0;
+        font-size: 28px;
+    }
+
+    .puntuacion-grande {
+        margin: 30px 0;
+    }
+
+    .puntuacion-circulo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #d4af37, #ffd700);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        position: relative;
+    }
+
+    .numero-puntuacion {
+        font-size: 64px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .simbolo-porcentaje {
+        position: absolute;
+        right: 30px;
+        bottom: 30px;
+        font-size: 28px;
+        color: white;
+        opacity: 0.8;
+    }
+
+    .resultado-resumen {
+        margin: 30px 0;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .resultado-resumen p {
+        margin: 10px 0;
+    }
+
+    .verde {
+        color: #4caf50;
+        font-weight: 600;
+    }
+
+    .dorado {
+        color: #d4af37;
+        font-weight: 600;
+    }
+
+    .mensaje-excelente,
+    .mensaje-bien,
+    .mensaje-regular,
+    .mensaje-intenta {
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .mensaje-excelente {
+        background: #c8e6c9;
+        color: #2e7d32;
+        border-left: 4px solid #4caf50;
+    }
+
+    .mensaje-bien {
+        background: #fff9e6;
+        color: #f57f17;
+        border-left: 4px solid #fbc02d;
+    }
+
+    .mensaje-regular {
+        background: #ffe6cc;
+        color: #e65100;
+        border-left: 4px solid #ff9800;
+    }
+
+    .mensaje-intenta {
+        background: #ffcccc;
+        color: #c62828;
+        border-left: 4px solid #f44336;
+    }
+
+    .detalles-respuestas {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .detalles-respuestas h2 {
+        color: #333;
+        margin: 0 0 20px 0;
+    }
+
+    .respuestas-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .respuesta-item {
+        display: flex;
+        gap: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 5px solid;
+        background: #fafafa;
+    }
+
+    .respuesta-item.correcta {
+        border-left-color: #4caf50;
+        background: #f1f8f4;
+    }
+
+    .respuesta-item.incorrecta {
+        border-left-color: #f44336;
+        background: #fef5f5;
+    }
+
+    .respuesta-icon {
+        font-size: 24px;
+        font-weight: bold;
+        min-width: 30px;
+        text-align: center;
+        margin-top: 2px;
+    }
+
+    .respuesta-item.correcta .respuesta-icon {
+        color: #4caf50;
+    }
+
+    .respuesta-item.incorrecta .respuesta-icon {
+        color: #f44336;
+    }
+
+    .respuesta-contenido {
+        flex: 1;
+    }
+
+    .respuesta-contenido h3 {
+        margin: 0 0 12px 0;
+        color: #333;
+        font-size: 16px;
+    }
+
+    .respuesta-comparacion {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        font-size: 14px;
+    }
+
+    .tu-respuesta,
+    .respuesta-correcta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .label {
+        color: #999;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .valor {
+        font-weight: 600;
+        padding: 5px 8px;
+        border-radius: 4px;
+        background: white;
+    }
+
+    .valor.correcta {
+        color: #4caf50;
+        background: #e8f5e9;
+    }
+
+    .valor.incorrecta {
+        color: #f44336;
+        background: #ffebee;
+    }
+
+    .resultado-acciones {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-large {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .resultado-header {
+            padding: 25px;
+        }
+
+        .resultado-header h1 {
+            font-size: 24px;
+        }
+
+        .puntuacion-circulo {
+            width: 150px;
+            height: 150px;
+        }
+
+        .numero-puntuacion {
+            font-size: 48px;
+        }
+
+        .respuesta-comparacion {
+            grid-template-columns: 1fr;
+        }
+
+        .resultado-acciones {
+            flex-direction: column;
+        }
+
+        .btn-large {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}

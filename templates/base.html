@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}¿Quién Quiere Ser Sevillano?{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        {% if 'user_id' in session %}
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{{ url_for('dashboard') }}" class="brand">🎯 ¿Quién Quiere Ser Sevillano?</a>
+                <div class="nav-right">
+                    <span class="user-info">Hola, {{ session['nombre'] }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar sesión</a>
+                </div>
+            </div>
+        </nav>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                        <span class="close-alert">&times;</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 ¿Quién Quiere Ser Sevillano? - Quiz Educativo sobre Sevilla</p>
+    </footer>
+
+    <script>
+        // Cerrar alertas
+        document.querySelectorAll('.close-alert').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

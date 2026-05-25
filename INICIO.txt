@@ -1,0 +1,242 @@
+================================================================================
+¿QUIEN QUIERE SER SEVILLANO?
+Quiz Educativo Interactivo sobre Sevilla
+================================================================================
+
+BIENVENIDO
+
+Este es el proyecto completo de la Aplicación "¿Quién Quiere Ser Sevillano?"
+desarrollado con Python, Flask y MariaDB.
+
+================================================================================
+INICIO RÁPIDO (5 MINUTOS)
+================================================================================
+
+1. Instala las dependencias:
+   pip install -r requirements.txt
+
+2. Configura la base de datos:
+   python setup_db.py
+
+3. Ejecuta la aplicación:
+   python app.py
+
+4. Abre tu navegador en:
+   http://localhost:5000
+
+¡Listo! El quiz está funcionando.
+
+================================================================================
+ARCHIVOS IMPORTANTES
+================================================================================
+
+PYTHON (Backend):
+  • app.py           - Aplicación principal Flask
+  • database.py      - Gestión de base de datos
+  • setup_db.py      - Script de configuración de BD
+  • config.py        - Configuración de la aplicación
+  • requirements.txt - Dependencias necesarias
+
+HTML/CSS (Frontend):
+  • templates/       - Carpeta con archivos HTML
+  • static/          - Carpeta con CSS y estilos
+
+DOCUMENTACIÓN:
+  • README.md              - Documentación completa
+  • QUICKSTART.md          - Guía de 5 minutos
+  • INSTALACION.md         - Instalación paso a paso
+  • ARQUITECTURA.md        - Detalles técnicos
+  • PROYECTO_COMPLETADO.md - Resumen final
+
+CONFIGURACIÓN:
+  • .env.example   - Variables de entorno (ejemplo)
+  • install.sh     - Script automático (Linux/Mac)
+
+================================================================================
+REQUISITOS DEL SISTEMA
+================================================================================
+
+Obligatorio:
+  ✓ Python 3.8 o superior
+  ✓ MariaDB 10.5 o MySQL 5.7+
+  ✓ Internet (para descargas iniciales)
+
+Recomendado:
+  ✓ 4GB RAM mínimo
+  ✓ 1GB espacio disponible
+  ✓ Navegador moderno (Chrome, Firefox, Safari, Edge)
+
+================================================================================
+ESTRUCTURA DEL PROYECTO
+================================================================================
+
+Base de Datos:
+  • Tabla: usuarios          (nombre, email, contraseña, fecha_registro)
+  • Tabla: preguntas         (20+ preguntas sobre Sevilla)
+  • Tabla: puntuaciones      (resultados de cada usuario)
+
+Funcionalidades:
+  • Registro de usuarios
+  • Autenticación segura
+  • Quiz interactivo (20 preguntas)
+  • Cálculo de puntuaciones
+  • Historial de intentos
+  • Dashboard con estadísticas
+  • Interfaz responsive
+
+================================================================================
+PRIMEROS PASOS
+================================================================================
+
+Paso 1: REGISTRARSE
+  - Entra en http://localhost:5000
+  - Haz clic en "Registrarse"
+  - Completa el formulario con:
+    * Nombre (mínimo 3 caracteres)
+    * Email válido
+    * Contraseña (mínimo 6 caracteres)
+
+Paso 2: INICIA SESIÓN
+  - Usa tus credenciales registradas
+  - Accede al Dashboard
+
+Paso 3: COMIENZA EL QUIZ
+  - Haz clic en "Comenzar Quiz"
+  - Responde todas las preguntas
+  - Cada pregunta con 4 opciones (A, B, C, D)
+
+Paso 4: VE TUS RESULTADOS
+  - Al finalizar, recibirás una puntuación
+  - Verás el desglose de respuestas
+  - Podrás repetir el quiz
+
+================================================================================
+PREGUNTAS INCLUIDAS
+================================================================================
+
+El quiz contiene 20 preguntas sobre:
+
+  🏛️ Monumentos (La Catedral, Torre del Oro, Alcázar, etc.)
+  📜 Historia (Exposición Iberoamericana, conquista de Granada, etc.)
+  🗺️ Geografía (Ubicación, ríos, barrios de Sevilla)
+  🎭 Cultura (Arte, música, artistas sevillanos)
+  🎉 Tradiciones (Feria de Sevilla, costumbres locales)
+
+Todas las preguntas tienen respuestas validadas sobre Sevilla.
+
+================================================================================
+SEGURIDAD
+================================================================================
+
+Esta aplicación implementa:
+  ✓ Hashing SHA256 para contraseñas
+  ✓ Validación en cliente y servidor
+  ✓ Sesiones seguras
+  ✓ Protección contra SQL Injection
+  ✓ Almacenamiento seguro de datos
+
+NO se almacenan contraseñas en texto plano.
+
+================================================================================
+SOLUCIÓN DE PROBLEMAS
+================================================================================
+
+Problema: "No se puede conectar a MariaDB"
+Solución: Verifica que MariaDB esté ejecutándose
+  Windows: Abre Services y busca MySQL/MariaDB
+  Linux:   sudo service mysql start
+  Mac:     mysql.server start
+
+Problema: "Módulo no encontrado"
+Solución: Instala dependencias
+  pip install -r requirements.txt
+
+Problema: "Puerto 5000 ya en uso"
+Solución: Edita la última línea de app.py
+  app.run(debug=True, host='localhost', port=5001)
+
+Problema: "Error al crear base de datos"
+Solución: Verifica permisos de MySQL
+  mysql -u root
+  Si falta acceso, usa: sudo python setup_db.py
+
+================================================================================
+DOCUMENTACIÓN
+================================================================================
+
+Para más información, consulta:
+
+  README.md         - Documentación completa del proyecto
+  QUICKSTART.md     - Guía de inicio rápido en 5 minutos
+  INSTALACION.md    - Instrucciones detalladas de instalación
+  ARQUITECTURA.md   - Detalles técnicos de la implementación
+
+================================================================================
+SOPORTE Y CONTACTO
+================================================================================
+
+Si encuentras problemas:
+  1. Revisa la sección "Solución de Problemas"
+  2. Consulta los archivos de documentación
+  3. Verifica que cumplas los requisitos del sistema
+  4. Asegúrate de que MariaDB esté corriendo
+
+================================================================================
+INFORMACIÓN DEL PROYECTO
+================================================================================
+
+Nombre: ¿Quién Quiere Ser Sevillano?
+Tipo: Quiz Educativo Web
+Lenguaje: Python (Backend), HTML/CSS (Frontend)
+Base de Datos: MariaDB
+Framework: Flask
+Versión: 1.0.0
+Estado: ✅ COMPLETADO Y FUNCIONAL
+Fecha: 25 de Mayo de 2026
+
+Desarrollador: Especialista Web Full-Stack Python
+
+================================================================================
+COMANDOS RÁPIDOS
+================================================================================
+
+Instalar dependencias:
+  pip install -r requirements.txt
+
+Configurar base de datos:
+  python setup_db.py
+
+Ejecutar aplicación:
+  python app.py
+
+Detener aplicación:
+  Presiona Ctrl+C en la terminal
+
+Abrir en navegador:
+  http://localhost:5000
+
+================================================================================
+NOTAS IMPORTANTES
+================================================================================
+
+• La aplicación usa DEBUG=True por defecto (cambiar en producción)
+• Los datos se guardan automáticamente en MariaDB
+• Puedes ejecutar setup_db.py múltiples veces sin problemas
+• Los usuarios y puntuaciones se mantienen entre sesiones
+• La interfaz es responsive y funciona en móviles
+
+================================================================================
+¡DISFRUTA JUGANDO A ¿QUIÉN QUIERE SER SEVILLANO!
+================================================================================
+
+Para comenzar, ejecuta en tu terminal:
+
+  cd /home/alumnado/Escritorio/curso
+  python setup_db.py
+  python app.py
+
+Luego abre: http://localhost:5000
+
+¡Aprende sobre la hermosa ciudad de Sevilla diferente! 🌟
+
+================================================================================
