@@ -1,0 +1,25 @@
+# Backend Python: no debe formar parte del despliegue en Vercel
+app.py
+database.py
+config.py
+run.py
+setup_db.py
+requirements.txt
+quiz_sevilla.db
+*.pyc
+__pycache__/
+venv/
+myvenv/
+venn/
+
+# Plantillas Flask que ya no se usan en la versión estática
+templates/
+
+# Archivos de desarrollo innecesarios para Vercel
+*.log
+INICIO.txt
+INSTALACION.md
+ARQUITECTURA.md
+QUICKSTART.md
+PROYECTO_COMPLETADO.md
+README.md
