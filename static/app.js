@@ -354,19 +354,19 @@ function initTabs() {
 }
 
 function bindEvents() {
-  $('#registerForm').addEventListener('submit', registerUser);
-  $('#loginForm').addEventListener('submit', loginUser);
-  $('#navLogoutBtn').addEventListener('click', logout);
-  $('#logoutBtn2').addEventListener('click', logout);
-  $('#startQuizBtn').addEventListener('click', startQuiz);
-  $('#goPlayBtn').addEventListener('click', () => state.session ? showOnly('dashboardSection') : showOnly('authSection'));
-  $('#goAuthBtn').addEventListener('click', () => showOnly('authSection'));
-  $('#brandHome').addEventListener('click', (e) => { e.preventDefault(); showOnly('authSection'); });
-  $('#navDashboardBtn').addEventListener('click', () => { if (requireSession()) showOnly('dashboardSection'); });
-  $('#quizForm').addEventListener('submit', submitQuizAnswer);
-  $('#cancelQuizBtn').addEventListener('click', cancelQuiz);
-  $('#playAgainBtn').addEventListener('click', startQuiz);
-  $('#backDashboardBtn').addEventListener('click', () => showOnly('dashboardSection'));
+  $('#registerForm')?.addEventListener('submit', registerUser);
+  $('#loginForm')?.addEventListener('submit', loginUser);
+  $('#navLogoutBtn')?.addEventListener('click', logout);
+  $('#logoutBtn2')?.addEventListener('click', logout);
+  $('#startQuizBtn')?.addEventListener('click', startQuiz);
+  $('#goPlayBtn')?.addEventListener('click', () => state.session ? showOnly('dashboardSection') : showOnly('authSection'));
+  $('#goAuthBtn')?.addEventListener('click', () => showOnly('authSection'));
+  $('#brandHome')?.addEventListener('click', (e) => { e.preventDefault(); showOnly('authSection'); });
+  $('#navDashboardBtn')?.addEventListener('click', () => { if (requireSession()) showOnly('dashboardSection'); });
+  $('#quizForm')?.addEventListener('submit', submitQuizAnswer);
+  $('#cancelQuizBtn')?.addEventListener('click', cancelQuiz);
+  $('#playAgainBtn')?.addEventListener('click', startQuiz);
+  $('#backDashboardBtn')?.addEventListener('click', () => showOnly('dashboardSection'));
 }
 
 function boot() {
