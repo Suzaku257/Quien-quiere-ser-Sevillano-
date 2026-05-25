@@ -18,6 +18,9 @@ const QUESTIONS = [
   { id: 10, category: 'Monumentos', question: '¿Qué palacio es famoso por su arquitectura mudéjar?', options: ['Alcázar de Sevilla', 'Palacio Real de Madrid', 'La Alhambra de Granada', 'Casa Batlló'], answer: 'A' }
 ];
 
+let storageAvailable = true;
+const memoryStorage = {};
+
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 
@@ -30,15 +33,22 @@ const state = {
 
 function loadJSON(key, fallback) {
   try {
-    const raw = localStorage.getItem(key);
+    const raw = window.localStorage.getItem(key);
     return raw ? JSON.parse(raw) : fallback;
   } catch {
+    storageAvailable = false;
     return fallback;
   }
 }
 
 function saveJSON(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+    storageAvailable = true;
+  } catch {
+    storageAvailable = false;
+    memoryStorage[key] = value;
+  }
 }
 
 function uid(prefix) {
@@ -63,6 +73,12 @@ function persist() {
   saveJSON(STORAGE_KEYS.scores, state.scores);
   saveJSON(STORAGE_KEYS.session, state.session);
   saveJSON(STORAGE_KEYS.quiz, state.quiz);
+}
+
+function storageMessage() {
+  return storageAvailable
+    ? ''
+    : '<div class="notice error">Tu navegador ha bloqueado el almacenamiento local. La app seguirá funcionando, pero los datos no se guardarán al recargar.</div>';
 }
 
 function getCurrentUser() {
@@ -309,6 +325,8 @@ function escapeHTML(str) {
 function renderAll() {
   renderLeaderboard();
   renderRecentScores();
+  const storageNotice = document.getElementById('storageNotice');
+  if (storageNotice) storageNotice.innerHTML = storageMessage();
   if (state.session && getCurrentUser()) {
     renderDashboard();
     $('#navDashboardBtn').classList.remove('hidden');
